@@ -1,11 +1,8 @@
-﻿using Keycloak.AuthServices.Common.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using POCKeycloak.Application.DTO;
 using POCKeycloak.Application.Interfaces;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace POCKeycloak.Controllers
 {
