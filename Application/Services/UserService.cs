@@ -40,7 +40,7 @@ namespace POCKeycloak.Application.Services
             if (string.IsNullOrWhiteSpace(refreshToken))
                 return null;
 
-            var authority = _configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/myrealm";
+            var authority = _configuration["Keycloak:Authority"];
             var tokenEndpoint = $"{authority.TrimEnd('/')}/protocol/openid-connect/token";
             var clientId = _configuration["Keycloak:ClientId"] ?? "dotnet-api";
             var clientSecret = _configuration["Keycloak:ClientSecret"] ?? string.Empty;
@@ -77,7 +77,7 @@ namespace POCKeycloak.Application.Services
             if (request == null) throw new ArgumentNullException(nameof(request));
 
             // Configuration
-            var authority = _configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/myrealm"; // e.g. http://localhost:8080/realms/myrealm
+            var authority = _configuration["Keycloak:Authority"];
             // Admin endpoints are under /admin/realms/{realm}
             // Extract base url and realm from authority
             // authority is expected to end with /realms/{realm}
@@ -189,7 +189,7 @@ namespace POCKeycloak.Application.Services
                 throw new InvalidOperationException("Failed to acquire token for proxy user.");
 
             // Build return link — include access_token as query param (demo only)
-            var returnBase = request.ReturnUrl ?? _configuration["Proxy:ReturnUrlBase"] ?? "http://localhost:5000/guest";
+            var returnBase = request.ReturnUrl ?? _configuration["Proxy:ReturnUrlBase"];
             ProxyLinkResponse link = new ProxyLinkResponse()
             {
              proxyLink= $"{returnBase}{(returnBase.Contains('?') ? '&' : '?')}access_token={Uri.EscapeDataString(tokenResp.AccessToken ?? string.Empty)}"
@@ -224,7 +224,7 @@ namespace POCKeycloak.Application.Services
         // Private: encapsulates the identity provider HTTP call / token creation
         private async Task<TokenResponse?> AcquireTokenFromIdentityProviderAsync(string username, string password, CancellationToken cancellationToken)
         {
-            var authority = _configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/myrealm";
+            var authority = _configuration["Keycloak:Authority"];
             var tokenEndpoint = $"{authority.TrimEnd('/')}/protocol/openid-connect/token";
             var clientId = _configuration["Keycloak:ClientId"] ?? "dotnet-api";
             var clientSecret = _configuration["Keycloak:ClientSecret"]??"FVk9dnhMbWqrllVnkMPukLOdPCajC3pI"; 
@@ -268,7 +268,7 @@ namespace POCKeycloak.Application.Services
             if (string.IsNullOrWhiteSpace(userId))
                 return null;
 
-            var authority = _configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/myrealm";
+            var authority = _configuration["Keycloak:Authority"];
             var authorityUri = new Uri(authority);
             var segments = authorityUri.Segments.Select(s => s.Trim('/')).Where(s => !string.IsNullOrEmpty(s)).ToArray();
             if (segments.Length < 2)
@@ -325,7 +325,7 @@ namespace POCKeycloak.Application.Services
 
         public async Task<bool> Logout(string sessionId, CancellationToken cancellationToken = default)
         {
-            var authority = _configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/myrealm";
+            var authority = _configuration["Keycloak:Authority"] ;
             var authorityUri = new Uri(authority);
             var segments = authorityUri.Segments.Select(s => s.Trim('/')).Where(s => !string.IsNullOrEmpty(s)).ToArray();
             if (segments.Length < 2)

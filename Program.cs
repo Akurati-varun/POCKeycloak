@@ -9,11 +9,6 @@ using POCKeycloak.Properties;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Keycloak configuration can be provided via appsettings.json or environment variables:
-// Keycloak:Authority, Keycloak:ClientId, Keycloak:ClientSecret (optional)
-var keycloakAuthority = builder.Configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/myrealm";
-var keycloakAudience = builder.Configuration["Keycloak:ClientId"] ?? "dotnet-api";
-
 
 builder.Services.AddHttpClient();
 
